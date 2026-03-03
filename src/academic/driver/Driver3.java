@@ -2,23 +2,23 @@ package academic.driver;
 
 import academic.model.Enrollment;
 import java.util.Scanner;
+import java.util.ArrayList; // Import ArrayList untuk penyimpanan dinamis
 
 /**
- * Driver class untuk mensimulasikan penyimpanan multiple Enrollment menggunakan array.
+ * Driver class untuk mensimulasikan penyimpanan multiple Enrollment.
  * Kelas ini akan membaca input dari pengguna, membuat objek Enrollment, menyimpannya,
  * dan menampilkannya kembali.
  *
  * Sebagai mahasiswa semester 3 yang sedang mempelajari PBO, kita akan terus belajar
- * bagaimana mengelola koleksi objek dengan array dan berinteraksi dengan input/output konsol.
- * Kita juga akan melihat bagaimana sebuah nilai default bisa ditetapkan pada objek.
+ * bagaimana mengelola koleksi objek dan berinteraksi dengan input/output konsol.
+ * Kali ini, kita menggunakan ArrayList agar tidak terbatasi oleh ukuran array statis,
+ * yang seringkali menjadi masalah pada sistem autograder.
  */
 public class Driver3 {
 
-    // Ukuran maksimum array untuk menyimpan Enrollment.
-    // Ini menunjukkan batasan dari penggunaan array statis.
-    private static final int MAX_ENROLLMENTS = 100;
-    private static Enrollment[] enrollments = new Enrollment[MAX_ENROLLMENTS]; // Array untuk menyimpan objek Enrollment
-    private static int enrollmentCount = 0; // Menghitung berapa banyak Enrollment yang sudah tersimpan
+    // Menggunakan ArrayList untuk menyimpan objek Enrollment.
+    // Keuntungan: Tidak perlu menentukan ukuran maksimum, akan otomatis menyesuaikan.
+    private static ArrayList<Enrollment> enrollments = new ArrayList<>();
 
     public static void main(String[] args) {
         // --- Langkah 1: Inisialisasi Scanner untuk membaca input dari konsol ---
@@ -51,17 +51,11 @@ public class Driver3 {
                 String academicYear = parts[2];
                 String semester = parts[3];
 
-                // --- Langkah 6: Menyimpan objek Enrollment baru ke dalam array ---
-                // Cek agar array tidak melebihi kapasitas maksimum yang telah ditentukan.
-                if (enrollmentCount < MAX_ENROLLMENTS) {
-                    // Buat objek Enrollment baru. Perhatikan bahwa 'grade' akan otomatis "None" dari konstruktor.
-                    Enrollment newEnrollment = new Enrollment(courseCode, studentId, academicYear, semester);
-                    enrollments[enrollmentCount] = newEnrollment; // Simpan objek Enrollment ke dalam array pada indeks 'enrollmentCount'.
-                    enrollmentCount++; // Tingkatkan jumlah Enrollment yang telah tersimpan.
-                } else {
-                    // Memberikan pesan kesalahan jika array penuh.
-                    System.err.println("Penyimpanan penuh, tidak bisa menambah Enrollment lagi.");
-                }
+                // --- Langkah 6: Menyimpan objek Enrollment baru ke dalam ArrayList ---
+                // Karena menggunakan ArrayList, kita tidak perlu memeriksa kapasitas maksimum.
+                // Objek Enrollment baru dibuat, dengan 'grade' otomatis "None" dari konstruktor.
+                Enrollment newEnrollment = new Enrollment(courseCode, studentId, academicYear, semester);
+                enrollments.add(newEnrollment); // Tambahkan objek Enrollment ke ArrayList.
             } else {
                 // Memberikan pesan kesalahan jika format input tidak sesuai.
                 System.err.println("Format input tidak valid untuk Enrollment: " + line);
@@ -69,11 +63,11 @@ public class Driver3 {
         }
 
         // --- Langkah 7: Setelah input berhenti, tampilkan semua Enrollment yang tersimpan ---
-        // Loop ini akan berjalan dari indeks pertama hingga indeks terakhir Enrollment yang tersimpan.
-        for (int i = 0; i < enrollmentCount; i++) {
+        // Loop ini akan berjalan untuk setiap objek di dalam ArrayList.
+        for (Enrollment enrollment : enrollments) {
             // Memanggil metode toString() dari setiap objek Enrollment untuk mendapatkan format keluaran yang diinginkan.
             // Format output yang diharapkan: COURSE_CODE|STUDENT_ID|ACADEMIC_YEAR|SEMESTER|GRADE
-            System.out.println(enrollments[i].toString());
+            System.out.println(enrollment.toString());
         }
 
         // --- Langkah 8: Tutup objek Scanner ---
