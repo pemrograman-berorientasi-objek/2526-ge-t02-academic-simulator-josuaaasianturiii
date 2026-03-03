@@ -6,7 +6,7 @@ import java.util.Scanner;
 /**
  * Driver class untuk mensimulasikan penyimpanan multiple Course menggunakan array.
  * Kelas ini akan membaca input dari pengguna, membuat objek Course, menyimpannya,
- * dan menampilkannya kembali.
+ * dan menampilkannya kembali..
  *
  * Sebagai mahasiswa yang sedang mempelajari PBO, kita akan melihat bagaimana
  * data disimpan dalam objek dan diorganisir dalam struktur data sederhana (array).
