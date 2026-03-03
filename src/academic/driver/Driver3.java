@@ -1,54 +1,53 @@
 package academic.driver;
 
-import academic.model.Enrollment;
-import java.util.Scanner;
-import java.util.ArrayList;
+import academic.model.Enrollment; // Mengimpor kelas Enrollment dari paket academic.model
+import java.util.ArrayList;       // Digunakan untuk menyimpan daftar Enrollment secara dinamis
+import java.util.List;            // Antarmuka untuk koleksi data
+import java.util.Scanner;         // Digunakan untuk membaca input dari konsol
 
 /**
- * Driver class untuk mensimulasikan penyimpanan multiple Enrollment.
- * Kelas ini akan membaca input dari pengguna, membuat objek Enrollment, menyimpannya,
- * dan menampilkannya kembali.
- *
- * Sebagai mahasiswa semester 3 yang sedang mempelajari PBO, kita akan terus belajar
- * bagaimana mengelola koleksi objek dan berinteraksi dengan input/output konsol.
- * Kali ini, kita menggunakan ArrayList agar tidak terbatasi oleh ukuran array statis,
- * yang seringkali menjadi masalah pada sistem autograder.
+ * 
+ * Driver class untuk menyimulasikan kemampuan penyimpanan multiple Enrollment
+ * dan menerima input interaktif dari pengguna, serta menampilkannya.
  */
 public class Driver3 {
 
-    private static ArrayList<Enrollment> enrollments = new ArrayList<>();
-
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in); // Inisialisasi Scanner untuk membaca input
+        List<Enrollment> enrollments = new ArrayList<>(); // Menggunakan ArrayList untuk menyimpan objek Enrollment
+
         String line;
+        // Loop untuk terus membaca input hingga bertemu delimiter "---"
+        while (scanner.hasNextLine()) {
+            line = scanner.nextLine(); // Membaca satu baris input
 
-        while (input.hasNextLine()) {
-            line = input.nextLine();
-
-            if (line.equals("---")) {
+            if (line.equals("---")) { // Kondisi untuk menghentikan pembacaan input
                 break;
             }
 
-            String[] parts = line.split("#");
+            // Memisahkan setiap segmen data berdasarkan karakter '#'
+            String[] segments = line.split("#");
 
-            if (parts.length == 4) {
-                String courseCode = parts[0];
-                String studentId = parts[1];
-                String academicYear = parts[2];
-                String semester = parts[3];
+            // Memastikan input memiliki 4 segmen sesuai yang diharapkan
+            if (segments.length == 4) {
+                String courseCode = segments[0];    // Segmen pertama adalah kode mata kuliah
+                String studentId = segments[1];     // Segmen kedua adalah NIM mahasiswa
+                String academicYear = segments[2];  // Segmen ketiga adalah tahun ajaran
+                String semester = segments[3];      // Segmen keempat adalah semester
 
-                Enrollment newEnrollment = new Enrollment(courseCode, studentId, academicYear, semester);
-                enrollments.add(newEnrollment);
+                // Membuat objek Enrollment baru. Grade akan diinisialisasi sebagai "None" di konstruktor.
+                Enrollment enrollment = new Enrollment(courseCode, studentId, academicYear, semester);
+                enrollments.add(enrollment);
             } else {
-                System.err.println("Format input tidak valid untuk Enrollment: " + line);
+                System.err.println("Error: Format input tidak valid untuk baris: " + line + ". Harusnya 4 segmen dipisahkan '#'.");
             }
         }
 
+        // Menampilkan semua Enrollment yang telah tersimpan
         for (Enrollment enrollment : enrollments) {
-            System.out.println(enrollment.toString());
+            System.out.println(enrollment.toString()); // Menggunakan metode toString() dari kelas Enrollment
         }
 
-        input.close();
+        scanner.close(); // Menutup objek Scanner untuk mencegah resource leak
     }
 }
-
