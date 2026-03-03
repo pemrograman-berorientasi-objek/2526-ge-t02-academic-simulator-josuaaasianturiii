@@ -1,62 +1,57 @@
 package academic.model;
 
-
+/**
+ * @author 12S24029 Adithya Silaban
+ * @author NIM Nama
+ *
+ * Kelas model untuk merepresentasikan data pendaftaran (enrollment) mahasiswa pada suatu mata kuliah.
+ */
 public class Enrollment {
-    private Course course; // Objek Course yang didaftarkan
-    private Student student; // Objek Student yang mendaftar
-    private String academicYear;
-    private String semester;
-    private String grade; // Nilai yang didapat mahasiswa, default "None"
 
-    // Konstruktor utama tanpa grade, grade akan default "None"
-    public Enrollment(Course course, Student student, String academicYear, String semester) {
-        this.course = course;
-        this.student = student;
+    private String courseCode;      // Kode mata kuliah
+    private String studentId;       // NIM (Nomor Induk Mahasiswa)
+    private String academicYear;    // Tahun ajaran (misalnya "2021/2022")
+    private String semester;        // Semester (misalnya "even" untuk genap, "odd" untuk ganjil)
+    private String grade;           // Nilai grade mahasiswa untuk mata kuliah ini
+
+    // Konstruktor untuk inisialisasi objek Enrollment
+    // Grade diinisialisasi sebagai "None" secara default
+    public Enrollment(String courseCode, String studentId, String academicYear, String semester) {
+        this.courseCode = courseCode;
+        this.studentId = studentId;
         this.academicYear = academicYear;
         this.semester = semester;
-        this.grade = "None"; // Default grade sesuai contoh output Task 03
+        this.grade = "None"; // Sesuai dengan contoh output, grade default adalah "None"
     }
 
-    // Konstruktor overloaded jika grade langsung diberikan saat enrollment dibuat
-    public Enrollment(Course course, Student student, String academicYear, String semester, String grade) {
-        this.course = course;
-        this.student = student;
-        this.academicYear = academicYear;
-        this.semester = semester;
-        this.grade = grade;
+    // Metode getter untuk mengakses kode mata kuliah
+    public String getCourseCode() {
+        return courseCode;
     }
 
-    // Getter methods
-    public Course getCourse() {
-        return course;
+    // Metode getter untuk mengakses NIM mahasiswa
+    public String getStudentId() {
+        return studentId;
     }
 
-    public Student getStudent() {
-        return student;
-    }
-
+    // Metode getter untuk mengakses tahun ajaran
     public String getAcademicYear() {
         return academicYear;
     }
 
+    // Metode getter untuk mengakses semester
     public String getSemester() {
         return semester;
     }
 
+    // Metode getter untuk mengakses grade
     public String getGrade() {
         return grade;
     }
 
-    // Setter method untuk mengubah grade
-    public void setGrade(String grade) {
-        this.grade = grade;
-    }
-
-    // Metode toString untuk format output Task 03 dan Task 04
+    // Override metode toString untuk representasi string objek Enrollment sesuai format output yang diminta
     @Override
     public String toString() {
-        // Output format: CourseCode|StudentID|AcademicYear|Semester|Grade
-        // Kita gunakan getCode() dan getId() dari objek Course dan Student
-        return course.getCode() + "|" + student.getId() + "|" + academicYear + "|" + semester + "|" + grade;
+        return courseCode + "|" + studentId + "|" + academicYear + "|" + semester + "|" + grade;
     }
 }
